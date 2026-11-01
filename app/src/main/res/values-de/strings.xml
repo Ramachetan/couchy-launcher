@@ -179,4 +179,8 @@
     <string name="cd_move_down">Nach unten</string>
     <string name="cd_delete_section">Sektion löschen</string>
     <string name="about_source">Quellcode</string>
+
+    <string name="home_redirect_label">Couchy-Home-Taste</string>
+    <string name="home_redirect_description">Couchy beim Öffnen des Google-TV-Startbildschirms anzeigen. Der ursprüngliche Launcher bleibt aktiviert. Der Dienst kann weder Bildschirminhalte noch Tastendrücke lesen. Zum Zurückkehren zu Google TV diesen Dienst deaktivieren.</string>
+    <string name="home_redirect_settings">Bedienungshilfen öffnen</string>
 </resources>

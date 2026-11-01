@@ -179,4 +179,8 @@
     <string name="cd_move_down">Mover para baixo</string>
     <string name="cd_delete_section">Excluir seção</string>
     <string name="about_source">Código-fonte</string>
+
+    <string name="home_redirect_label">Botão Início do Couchy</string>
+    <string name="home_redirect_description">Abrir o Couchy quando aparecer a tela inicial do Google TV. O launcher original permanece ativo. Este serviço não lê o conteúdo da tela nem as teclas pressionadas. Desative o serviço para voltar ao Google TV.</string>
+    <string name="home_redirect_settings">Abrir configurações de acessibilidade</string>
 </resources>

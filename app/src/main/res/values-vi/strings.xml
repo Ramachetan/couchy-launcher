@@ -179,4 +179,8 @@
     <string name="cd_move_down">Chuyển xuống</string>
     <string name="cd_delete_section">Xóa mục</string>
     <string name="about_source">Mã nguồn</string>
+
+    <string name="home_redirect_label">Nút Trang chủ Couchy</string>
+    <string name="home_redirect_description">Mở Couchy khi màn hình chính Google TV xuất hiện. Trình khởi chạy gốc vẫn được bật. Dịch vụ không thể đọc nội dung màn hình hoặc thao tác nhấn phím. Tắt dịch vụ để quay lại Google TV.</string>
+    <string name="home_redirect_settings">Mở cài đặt hỗ trợ tiếp cận</string>
 </resources>

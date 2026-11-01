@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Couchy Launcher</string>
+    <string name="home_redirect_label">Couchy Home button</string>
+    <string name="home_redirect_description">Open Couchy when the Google TV home screen appears. The original launcher stays enabled. This service cannot read screen content or key presses. Turn this service off in Accessibility to return to Google TV.</string>
+    <string name="home_redirect_settings">Open Accessibility settings</string>
 
     <!-- Default category names (first install) -->
     <string name="cat_streaming">Streaming</string>

@@ -193,4 +193,8 @@
     <string name="cd_move_down">Descendre</string>
     <string name="cd_delete_section">Supprimer la section</string>
     <string name="about_source">Code source</string>
+
+    <string name="home_redirect_label">Bouton Accueil Couchy</string>
+    <string name="home_redirect_description">Ouvrir Couchy lorsque l’écran d’accueil Google TV apparaît. Le lanceur d’origine reste activé. Ce service ne peut lire ni le contenu de l’écran ni les touches. Désactivez ce service pour revenir à Google TV.</string>
+    <string name="home_redirect_settings">Ouvrir les paramètres d’accessibilité</string>
 </resources>

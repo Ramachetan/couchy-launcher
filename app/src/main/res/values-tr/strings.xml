@@ -179,4 +179,8 @@
     <string name="cd_move_down">Aşağı taşı</string>
     <string name="cd_delete_section">Bölümü sil</string>
     <string name="about_source">Kaynak kodu</string>
+
+    <string name="home_redirect_label">Couchy Ana Ekran düğmesi</string>
+    <string name="home_redirect_description">Google TV ana ekranı göründüğünde Couchy uygulamasını açar. Orijinal başlatıcı etkin kalır. Bu hizmet ekran içeriğini veya tuş basımlarını okuyamaz. Google TV uygulamasına dönmek için hizmeti kapatın.</string>
+    <string name="home_redirect_settings">Erişilebilirlik ayarlarını aç</string>
 </resources>

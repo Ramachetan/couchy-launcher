@@ -179,4 +179,8 @@
     <string name="cd_move_down">아래로 이동</string>
     <string name="cd_delete_section">섹션 삭제</string>
     <string name="about_source">소스 코드</string>
+
+    <string name="home_redirect_label">Couchy 홈 버튼</string>
+    <string name="home_redirect_description">Google TV 홈 화면이 나타나면 Couchy를 엽니다. 기존 런처는 활성 상태로 유지됩니다. 화면 내용이나 키 입력은 읽을 수 없습니다. Google TV로 돌아가려면 이 서비스를 끄세요.</string>
+    <string name="home_redirect_settings">접근성 설정 열기</string>
 </resources>

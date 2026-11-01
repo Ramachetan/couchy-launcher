@@ -179,4 +179,8 @@
     <string name="cd_move_down">नीचे ले जाएँ</string>
     <string name="cd_delete_section">सेक्शन हटाएँ</string>
     <string name="about_source">सोर्स कोड</string>
+
+    <string name="home_redirect_label">Couchy होम बटन</string>
+    <string name="home_redirect_description">Google TV की होम स्क्रीन दिखने पर Couchy खोलें। मूल लॉन्चर चालू रहता है। यह सेवा स्क्रीन की सामग्री या कुंजी दबाने की जानकारी नहीं पढ़ सकती। Google TV पर लौटने के लिए इस सेवा को बंद करें।</string>
+    <string name="home_redirect_settings">सुलभता सेटिंग खोलें</string>
 </resources>

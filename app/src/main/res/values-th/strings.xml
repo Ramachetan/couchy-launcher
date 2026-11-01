@@ -179,4 +179,8 @@
     <string name="cd_move_down">เลื่อนลง</string>
     <string name="cd_delete_section">ลบส่วน</string>
     <string name="about_source">ซอร์สโค้ด</string>
+
+    <string name="home_redirect_label">ปุ่มหน้าหลัก Couchy</string>
+    <string name="home_redirect_description">เปิด Couchy เมื่อหน้าหลักของ Google TV ปรากฏขึ้น ตัวเรียกใช้งานเดิมยังคงเปิดอยู่ บริการนี้ไม่สามารถอ่านเนื้อหาบนหน้าจอหรือการกดปุ่มได้ ปิดบริการเพื่อกลับไปใช้ Google TV</string>
+    <string name="home_redirect_settings">เปิดการตั้งค่าการช่วยเหลือพิเศษ</string>
 </resources>

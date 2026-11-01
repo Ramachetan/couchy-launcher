@@ -179,4 +179,8 @@
     <string name="cd_move_down">تحريك لأسفل</string>
     <string name="cd_delete_section">حذف القسم</string>
     <string name="about_source">الكود المصدري</string>
+
+    <string name="home_redirect_label">زر الصفحة الرئيسية في Couchy</string>
+    <string name="home_redirect_description">افتح Couchy عند ظهور الشاشة الرئيسية في Google TV. يبقى المشغّل الأصلي مفعّلاً. لا تستطيع هذه الخدمة قراءة محتوى الشاشة أو ضغطات المفاتيح. أوقف الخدمة للعودة إلى Google TV.</string>
+    <string name="home_redirect_settings">فتح إعدادات تسهيل الاستخدام</string>
 </resources>

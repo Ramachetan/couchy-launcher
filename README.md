@@ -6,6 +6,8 @@
 
 # Couchy Launcher
 
+**This fork:** Google TV Streamer support through an optional Home redirect, with the stock launcher left enabled. See [FORK.md](FORK.md) for setup, recovery, and build details; use that setup instead of the package-disabling fallback below.
+
 **A fast, private, one-screen home launcher for Android TV & Google TV.**
 
 ![License](https://img.shields.io/badge/license-GPLv3-blue)

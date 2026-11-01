@@ -71,6 +71,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onPostResume() {
+        super.onPostResume()
+        HomeRedirectService.onHomeResumed(this)
+    }
+
     override fun onDestroy() {
         unregisterReceiver(packageReceiver)
         super.onDestroy()

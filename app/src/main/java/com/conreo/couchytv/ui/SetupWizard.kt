@@ -59,9 +59,11 @@ import java.net.NetworkInterface
 fun SetupWizard(onDone: () -> Unit, onVpnChosen: (String?) -> Unit) {
     val context = LocalContext.current
     var step by remember { mutableIntStateOf(0) }
-    var gtvPage by remember { mutableIntStateOf(0) } // carousel page on the Google-TV step
     var defaultHome by remember { mutableStateOf(defaultHomePackage(context)) }
-    val isDefault = defaultHome == context.packageName
+    var redirectEnabled by remember {
+        mutableStateOf(com.conreo.couchytv.HomeRedirectService.isEnabled(context))
+    }
+    val isDefault = defaultHome == context.packageName || redirectEnabled
     val isGoogleTv = remember {
         // "Amati" feature = certified Google TV experience (home app locked by Google)
         context.packageManager.hasSystemFeature("com.google.android.feature.AMATI_EXPERIENCE")
@@ -70,7 +72,10 @@ fun SetupWizard(onDone: () -> Unit, onVpnChosen: (String?) -> Unit) {
 
     val roleLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { defaultHome = defaultHomePackage(context) }
+    ) {
+        defaultHome = defaultHomePackage(context)
+        redirectEnabled = com.conreo.couchytv.HomeRedirectService.isEnabled(context)
+    }
 
     fun requestDefault() {
         if (Build.VERSION.SDK_INT >= 29) {
@@ -123,7 +128,10 @@ fun SetupWizard(onDone: () -> Unit, onVpnChosen: (String?) -> Unit) {
                 0 -> {
                     Title(stringResource(R.string.wizard_welcome_title))
                     Body(stringResource(R.string.wizard_welcome_body))
-                    Body(stringResource(R.string.wizard_privacy_body))
+                    Body(stringResource(
+                        if (isGoogleTv) R.string.home_redirect_description
+                        else R.string.wizard_privacy_body,
+                    ))
                     NavRow(nextLabel = stringResource(R.string.next)) { step = 1 }
                 }
                 1 -> {
@@ -135,42 +143,16 @@ fun SetupWizard(onDone: () -> Unit, onVpnChosen: (String?) -> Unit) {
                             nextLabel = stringResource(R.string.next),
                         ) { step = 2 }
                     } else if (isGoogleTv) {
-                        // Carousel: 3 short pages so it fits & stays centered at
-                        // any DPI. Prev/Next moves between pages; on the ends it
-                        // steps out of the wizard.
-                        when (gtvPage) {
-                            0 -> {
-                                Body(stringResource(R.string.wizard_gtv_intro))
-                                Body(stringResource(R.string.wizard_gtv_adb))
-                                CodeLine("adb connect ${ip ?: "<TV-IP>"}:5555")
-                                CodeLine("adb shell cmd package set-home-activity com.conreo.couchytv/.MainActivity")
-                            }
-                            1 -> {
-                                Body(stringResource(R.string.wizard_gtv_overlay))
-                                CodeLine("adb shell cmd package resolve-activity -a android.intent.action.MAIN -c android.intent.category.HOME")
-                                CodeLine("adb shell pm disable-user --user 0 com.google.android.apps.tv.launcherx")
-                                CodeLine("adb shell pm disable-user --user 0 com.google.android.tvlauncher")
-                                CodeLine("adb shell pm disable-user --user 0 com.google.android.tungsten.setupwraith")
-                            }
-                            else -> {
-                                Body(stringResource(R.string.wizard_gtv_which))
-                                Body(stringResource(R.string.wizard_gtv_remap))
-                                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                    Button(onClick = { requestDefault() }) {
-                                        Text(stringResource(R.string.wizard_try_dialog))
-                                    }
-                                    Button(onClick = { defaultHome = defaultHomePackage(context) }) {
-                                        Text(stringResource(R.string.wizard_check_again))
-                                    }
-                                }
-                            }
+                        Body(stringResource(R.string.home_redirect_description))
+                        Button(onClick = {
+                            roleLauncher.launch(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+                        }) {
+                            Text(stringResource(R.string.home_redirect_settings))
                         }
-                        PagerRow(
-                            page = gtvPage,
-                            count = 3,
-                            onPrev = { if (gtvPage > 0) gtvPage-- else step = 0 },
-                            onNext = { if (gtvPage < 2) gtvPage++ else step = 2 },
-                        )
+                        Body(stringResource(R.string.home_redirect_label))
+                        NavRow(backAction = { step = 0 }, nextLabel = stringResource(R.string.wizard_skip)) {
+                            step = 2
+                        }
                     } else {
                         Body(stringResource(R.string.wizard_aosp_body))
                         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {

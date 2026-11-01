@@ -179,4 +179,8 @@
     <string name="cd_move_down">Вниз</string>
     <string name="cd_delete_section">Удалить раздел</string>
     <string name="about_source">Исходный код</string>
+
+    <string name="home_redirect_label">Кнопка «Домой» Couchy</string>
+    <string name="home_redirect_description">Открывать Couchy при появлении главного экрана Google TV. Исходный лаунчер остаётся включённым. Сервис не читает содержимое экрана или нажатия клавиш. Отключите сервис, чтобы вернуться к Google TV.</string>
+    <string name="home_redirect_settings">Открыть специальные возможности</string>
 </resources>

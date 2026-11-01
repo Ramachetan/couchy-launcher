@@ -179,4 +179,8 @@
     <string name="cd_move_down">Turunkan</string>
     <string name="cd_delete_section">Hapus bagian</string>
     <string name="about_source">Kode sumber</string>
+
+    <string name="home_redirect_label">Tombol Beranda Couchy</string>
+    <string name="home_redirect_description">Buka Couchy saat layar utama Google TV muncul. Peluncur asli tetap aktif. Layanan ini tidak dapat membaca isi layar atau penekanan tombol. Nonaktifkan layanan untuk kembali ke Google TV.</string>
+    <string name="home_redirect_settings">Buka setelan aksesibilitas</string>
 </resources>
