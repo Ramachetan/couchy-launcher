@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
+import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
@@ -17,6 +18,7 @@ import com.conreo.couchytv.ui.LauncherApp
 import com.conreo.couchytv.data.ConfigStore
 import kotlinx.coroutines.launch
 import java.util.Locale
+import java.io.File
 
 class MainActivity : ComponentActivity() {
 
@@ -55,6 +57,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launch { ConfigStore(applicationContext).restorePreferredRowOnce() }
+        applyLocalVideoIfRequested(intent)
 
         // A home screen never exits on Back
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -83,12 +86,43 @@ class MainActivity : ComponentActivity() {
         HomeRedirectService.onHomeResumed(this)
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        applyLocalVideoIfRequested(intent)
+    }
+
+    /** ADB import for Google TV builds whose document picker is only a system stub.
+     * Only the fixed file in this app's own storage can be selected: no caller paths
+     * or remote URLs are accepted, and future launches leave user choices alone.
+     */
+    private fun applyLocalVideoIfRequested(request: Intent?) {
+        if (request?.action != ACTION_APPLY_LOCAL_VIDEO) return
+        val directory = getExternalFilesDir(null) ?: return
+        val video = File(directory, "wallpaper.mp4")
+        if (!video.isFile || video.length() == 0L) return
+        lifecycleScope.launch {
+            ConfigStore(applicationContext).update {
+                it.copy(
+                    videoUri = Uri.fromFile(video).toString(),
+                    useVideoWallpaper = true,
+                    useCustomWallpaper = false,
+                    useBuiltinAerials = false,
+                    videoSpeed = 3,
+                )
+            }
+        }
+        // Avoid reapplying the import if Android later restores this activity.
+        request.action = Intent.ACTION_MAIN
+    }
+
     override fun onDestroy() {
         unregisterReceiver(packageReceiver)
         super.onDestroy()
     }
 
     companion object {
+        const val ACTION_APPLY_LOCAL_VIDEO = "com.conreo.couchytv.APPLY_LOCAL_VIDEO"
         private const val LOCALE_PREFS = "locale"
         private const val LOCALE_KEY = "lang"
 

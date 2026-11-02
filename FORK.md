@@ -17,3 +17,13 @@ Do not follow the upstream README's package-disabling fallback on the Google TV 
 Build instructions are in CONTRIBUTING.md. Preserve the signing key used for your installed build so later builds can update it without clearing settings.
 
 Build `1.0.6-ramachetan.2` restores the previous app row once: SmartTube, YouTube Music, YouTube, BrowseHere, Downloader, Google Play Store. It retains wallpaper and other preferences, and respects subsequent manual reordering. Package-change handling also refreshes tiles when an app is disabled.
+
+Build `1.0.6-ramachetan.3` adds local-video import for Google TV firmware without a document picker. Copy a video to the app's external files directory, then explicitly apply it:
+
+```sh
+adb shell mkdir -p /sdcard/Android/data/com.conreo.couchytv/files
+adb push YOUR_VIDEO.mp4 /sdcard/Android/data/com.conreo.couchytv/files/wallpaper.mp4
+adb shell am start -n com.conreo.couchytv/.MainActivity -a com.conreo.couchytv.APPLY_LOCAL_VIDEO
+```
+
+Only that fixed local file is accepted. Playback uses the existing muted, looping video wallpaper, which releases its decoder when another app opens. No media is bundled with this fork. To switch it off, choose a gradient or photo in Couchy's wallpaper settings.
