@@ -13,8 +13,8 @@ android {
         applicationId = "com.conreo.couchytv"
         minSdk = 21
         targetSdk = 34
-        versionCode = 11
-        versionName = "1.0.6-ramachetan.4"
+        versionCode = 12
+        versionName = "1.0.6-ramachetan.5"
     }
 
     // Release signing key, supplied by CI via environment variables (from GitHub

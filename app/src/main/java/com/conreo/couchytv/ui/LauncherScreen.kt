@@ -362,8 +362,9 @@ fun LauncherApp(rescanTick: Int) {
     // ----- display dimensions: size + spacing drive everything, columns
     // are always derived from available width (never a fixed count) -----
     val cardWidth: Dp = ICON_SIZES[config.iconScale.coerceIn(0, ICON_SIZES.size - 1)] *
-        if (config.racingTheme && config.layout == LAYOUT_DOCK) 0.86f else 1f
-    val gap: Dp = GAP_SIZES[config.spacing.coerceIn(0, GAP_SIZES.size - 1)]
+        if (config.racingTheme && config.layout == LAYOUT_DOCK) 0.76f else 1f
+    val gap: Dp = GAP_SIZES[config.spacing.coerceIn(0, GAP_SIZES.size - 1)] +
+        if (config.racingTheme && config.layout == LAYOUT_DOCK) 8.dp else 0.dp
 
     // Columns as laid out on screen (mirrors the padding used by GridSection /
     // DockArea) — move mode needs them to shift an icon up/down by a full row.
@@ -695,7 +696,7 @@ fun LauncherApp(rescanTick: Int) {
                 val statusBarHeight by animateDpAsState(
                     targetValue = if (config.showStatusBar || statusBarFocused) {
                         if (config.racingTheme) {
-                            if (date.isNotEmpty()) 112.dp else 98.dp
+                            if (date.isNotEmpty()) 124.dp else 100.dp
                         } else 80.dp
                     } else 4.dp,
                     label = "statusBarHeight",
@@ -1163,9 +1164,21 @@ private fun DockArea(
                 exit = fadeOut(tween(200)),
             ) {
                 Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(gapUsed)) {
-                        rows.getOrNull(1).orEmpty().forEach { app ->
-                            PeekStrip(app, cardWidth, cardHeight, peekH)
+                    if (config.racingTheme) {
+                        // Keep the bottom edge quiet while hinting at D-pad Down.
+                        Box(Modifier.height(peekH).width(24.dp), contentAlignment = Alignment.Center) {
+                            androidx.tv.material3.Icon(
+                                imageVector = AppIcons.Down,
+                                contentDescription = null,
+                                tint = RacingColors.onSurface.copy(alpha = 0.55f),
+                                modifier = Modifier.width(12.dp).height(12.dp),
+                            )
+                        }
+                    } else {
+                        Row(horizontalArrangement = Arrangement.spacedBy(gapUsed)) {
+                            rows.getOrNull(1).orEmpty().forEach { app ->
+                                PeekStrip(app, cardWidth, cardHeight, peekH)
+                            }
                         }
                     }
                 }
@@ -1266,7 +1279,7 @@ private fun DockGlassPanel(
                     .fillMaxSize()
                     .clip(SmoothCornerShape(LocalCornerRadius.current + 14.dp))
                     .background(if (config.racingTheme) RacingColors.glass else Color(0xB3121418))
-                    .background(Color.White.copy(alpha = if (config.racingTheme) 0.025f else 0.06f))
+                    .background(Color.White.copy(alpha = if (config.racingTheme) 0.01f else 0.06f))
                     .border(
                         1.dp,
                         if (config.racingTheme) RacingColors.outline else Color.Transparent,

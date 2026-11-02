@@ -6,14 +6,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.darkColorScheme
 
-/** Shared appearance roles for the personal Red Bull-inspired racing theme. */
+/** Shared appearance roles for the minimal motorsport theme. */
 object RacingColors {
-    val surface = Color(0xFF071426)
+    val surface = Color(0xFF141518)
     val onSurface = Color(0xFFF5F7FB)
-    val primary = Color(0xFFFFD44A)
+    val primary = Color(0xFFF5F7FB)
     val secondary = Color(0xFFE21B36)
-    val outline = onSurface.copy(alpha = 0.14f)
-    val glass = surface.copy(alpha = 0.82f)
+    val outline = onSurface.copy(alpha = 0.08f)
+    val glass = surface.copy(alpha = 0.52f)
 }
 
 val ACCENTS = listOf(

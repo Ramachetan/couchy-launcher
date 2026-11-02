@@ -201,6 +201,5 @@
     <string name="cd_delete_section">Delete section</string>
 
     <string name="racing_style">Racing style</string>
-    <string name="racing_style_sub">F1 clock, compact dock and Red Bull colors</string>
-    <string name="red_bull_racing" translatable="false">RED BULL RACING</string>
+    <string name="racing_style_sub">Italic clock, red accent and charcoal dock</string>
 </resources>

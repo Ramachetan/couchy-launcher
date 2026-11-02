@@ -1,7 +1,6 @@
 package com.conreo.couchytv.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -16,11 +15,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -45,24 +47,19 @@ fun StatusBar(
     onNetworkClick: () -> Unit,
     onSettingsClick: () -> Unit,
 ) {
-    // Optional glass panel behind the icon cluster — same look as the dock
-    // panel, corners follow the roundness setting.
-    val cluster = if (glass) {
+    // Racing mode floats over the wallpaper scrim; the classic glass option
+    // remains available when the personal style is switched off.
+    val cluster = if (glass && !racing) {
         Modifier
             .clip(SmoothCornerShape(LocalCornerRadius.current))
-            .background(if (racing) RacingColors.glass else Color(0xB3121418))
-            .background(Color.White.copy(alpha = if (racing) 0.025f else 0.06f))
-            .border(
-                1.dp,
-                if (racing) RacingColors.outline else Color.Transparent,
-                SmoothCornerShape(LocalCornerRadius.current),
-            )
-            .padding(horizontal = 12.dp, vertical = if (racing) 6.dp else 4.dp)
+            .background(Color(0xB3121418))
+            .background(Color.White.copy(alpha = 0.06f))
+            .padding(horizontal = 12.dp, vertical = 4.dp)
     } else Modifier
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 40.dp, vertical = if (racing) 12.dp else 18.dp),
+            .padding(horizontal = 40.dp, vertical = 18.dp),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -122,45 +119,40 @@ fun StatusBar(
     }
 }
 
-/** Racing timing-panel typography, with decorative red/yellow team-color bars. */
+// Bundled OFL font: no network request and no synthetic slant on the clock.
+private val RacingClockFont = FontFamily(
+    Font(R.font.barlow_condensed_bold_italic, FontWeight.Bold, FontStyle.Italic)
+)
+
 @Composable
 private fun RacingClock(time: String, date: String) {
-    Row(
-        modifier = Modifier.padding(start = 12.dp, end = 6.dp)
+    Column(
+        modifier = Modifier.padding(start = 20.dp, end = 4.dp)
             .semantics(mergeDescendants = true) {},
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        horizontalAlignment = Alignment.End,
+        verticalArrangement = Arrangement.spacedBy(3.dp),
     ) {
-        Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
-            Box(Modifier.width(3.dp).height(28.dp).background(RacingColors.secondary))
-            Box(Modifier.width(3.dp).height(10.dp).background(RacingColors.primary))
-        }
-        Column {
+        Text(
+            text = time,
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontSize = 48.sp, lineHeight = 50.sp,
+                fontFamily = RacingClockFont,
+                fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic,
+                letterSpacing = 0.sp, fontFeatureSettings = "tnum",
+                shadow = Shadow(Color.Black.copy(alpha = 0.5f), Offset(0f, 2f), 8f),
+            ),
+            color = RacingColors.onSurface,
+        )
+        Box(Modifier.width(36.dp).height(2.dp).background(RacingColors.secondary))
+        if (date.isNotEmpty()) {
             Text(
-                text = stringResource(R.string.red_bull_racing),
-                style = MaterialTheme.typography.labelSmall.copy(
-                    fontSize = 10.sp, lineHeight = 14.sp,
-                    fontWeight = FontWeight.Bold, letterSpacing = 1.sp,
+                text = date,
+                style = MaterialTheme.typography.labelMedium.copy(
+                    fontSize = 12.sp, lineHeight = 18.sp, letterSpacing = 0.5.sp,
                 ),
-                color = RacingColors.primary,
+                color = RacingColors.onSurface.copy(alpha = 0.8f),
+                modifier = Modifier.padding(top = 2.dp),
             )
-            Text(
-                text = time,
-                style = MaterialTheme.typography.headlineMedium.copy(
-                    fontSize = 32.sp, lineHeight = 38.sp,
-                    fontFamily = FontFamily.Monospace,
-                    fontWeight = FontWeight.Black, fontStyle = FontStyle.Italic,
-                    letterSpacing = (-1).sp, fontFeatureSettings = "tnum",
-                ),
-                color = RacingColors.onSurface,
-            )
-            if (date.isNotEmpty()) {
-                Text(
-                    text = date,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = RacingColors.onSurface.copy(alpha = 0.75f),
-                )
-            }
         }
     }
 }
