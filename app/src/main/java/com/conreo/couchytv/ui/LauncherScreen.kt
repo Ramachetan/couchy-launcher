@@ -733,6 +733,8 @@ fun LauncherApp(rescanTick: Int) {
                     LAYOUT_DOCK -> DockArea(
                         modifier = Modifier.weight(1f).fillMaxWidth(),
                         apps = dockApps,
+                        allApps = (dockApps + apps.filter { config.showHidden || it.pkg !in config.hidden })
+                            .distinctBy { it.pkg },
                         config = config,
                         accent = accent,
                         movePkg = movePkg,
@@ -1065,6 +1067,7 @@ private fun GridSection(
 private fun DockArea(
     modifier: Modifier,
     apps: List<AppEntry>,
+    allApps: List<AppEntry>,
     config: LauncherConfig,
     accent: Color,
     movePkg: String?,
@@ -1077,6 +1080,13 @@ private fun DockArea(
     onLaunch: (AppEntry) -> Unit,
     onMenu: (AppEntry) -> Unit,
 ) {
+    if (config.racingTheme) {
+        IconDockArea(
+            modifier, apps, allApps, config, accent, movePkg, moveFocus,
+            cardWidth, gap, intro, expanded, onExpandChange, onLaunch, onMenu,
+        )
+        return
+    }
     val dockFocus = remember { FocusRequester() }
     val gridFocus = remember { FocusRequester() }
     // Back closes the open grid (returns to the dock); when closed it falls

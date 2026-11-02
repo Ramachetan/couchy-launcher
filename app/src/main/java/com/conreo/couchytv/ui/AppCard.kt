@@ -46,6 +46,7 @@ fun AppCard(
     accent: Color,
     cardWidth: androidx.compose.ui.unit.Dp = 190.dp,
     showLabel: Boolean = true,
+    compactIcon: Boolean = false,
     modifier: Modifier = Modifier,
     onLaunch: () -> Unit,
     onLongPress: () -> Unit,
@@ -97,12 +98,12 @@ fun AppCard(
             .width(cardWidth),
         shape = ClickableSurfaceDefaults.shape(cardShape),
         colors = ClickableSurfaceDefaults.colors(
-            containerColor = app.tile,
-            focusedContainerColor = app.tile,
+            containerColor = if (compactIcon) Color.Transparent else app.tile,
+            focusedContainerColor = if (compactIcon) Color.White.copy(alpha = 0.08f) else app.tile,
             contentColor = Color.White,
             focusedContentColor = Color.White,
         ),
-        scale = ClickableSurfaceDefaults.scale(focusedScale = 1.10f),
+        scale = ClickableSurfaceDefaults.scale(focusedScale = if (compactIcon) 1.18f else 1.10f),
         glow = ClickableSurfaceDefaults.glow(
             // Softer + tighter than before: reads at 3m, cheap to render on weak
             // TV GPUs, and no longer competes with the accent ring.
@@ -119,9 +120,16 @@ fun AppCard(
         Box(
             Modifier
                 .fillMaxWidth()
-                .aspectRatio(16f / 9f)
+                .aspectRatio(if (compactIcon) 1f else 16f / 9f)
         ) {
-            if (app.banner != null) {
+            if (compactIcon && app.icon != null) {
+                Image(
+                    bitmap = app.icon,
+                    contentDescription = app.label,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.fillMaxSize().padding(4.dp),
+                )
+            } else if (app.banner != null) {
                 Image(
                     bitmap = app.banner,
                     contentDescription = app.label,

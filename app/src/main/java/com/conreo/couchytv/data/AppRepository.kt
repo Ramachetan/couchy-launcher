@@ -142,12 +142,11 @@ object AppRepository {
                             bannerDrawable.toBitmap(bannerW, bannerH, Bitmap.Config.ARGB_8888)
                         }.getOrNull()
                     }
-                val icon = if (banner == null) {
-                    // 128px: sharp on the fallback tile even on 4K panels.
-                    cachedBitmap(cacheDir, iconName, Bitmap.Config.ARGB_8888) {
-                        runCatching { ri.loadIcon(pm)?.toBitmap(128, 128) }.getOrNull()
-                    }
-                } else null
+                // The compact dock needs the actual app icon even when a TV
+                // banner exists. Decode once during scanning, never on focus.
+                val icon = cachedBitmap(cacheDir, iconName, Bitmap.Config.ARGB_8888) {
+                    runCatching { ri.loadIcon(pm)?.toBitmap(128, 128) }.getOrNull()
+                }
                 if (banner != null) validCacheNames.add(bannerName)
                 if (icon != null) validCacheNames.add(iconName)
                 // Upload textures ahead of first draw so the GPU never stalls
