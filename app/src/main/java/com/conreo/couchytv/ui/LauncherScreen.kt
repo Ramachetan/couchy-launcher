@@ -16,6 +16,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -355,18 +356,23 @@ fun LauncherApp(rescanTick: Int) {
     val dockApps = remember(categorized) {
         categorized.flatMap { it.second }.distinctBy { it.pkg }
     }
-    val accent = ACCENTS[config.accent.coerceIn(0, ACCENTS.size - 1)]
+    val accent = if (config.racingTheme) RacingColors.primary
+        else ACCENTS[config.accent.coerceIn(0, ACCENTS.size - 1)]
 
     // ----- display dimensions: size + spacing drive everything, columns
     // are always derived from available width (never a fixed count) -----
-    val cardWidth: Dp = ICON_SIZES[config.iconScale.coerceIn(0, ICON_SIZES.size - 1)]
+    val cardWidth: Dp = ICON_SIZES[config.iconScale.coerceIn(0, ICON_SIZES.size - 1)] *
+        if (config.racingTheme && config.layout == LAYOUT_DOCK) 0.86f else 1f
     val gap: Dp = GAP_SIZES[config.spacing.coerceIn(0, GAP_SIZES.size - 1)]
 
     // Columns as laid out on screen (mirrors the padding used by GridSection /
     // DockArea) — move mode needs them to shift an icon up/down by a full row.
     val screenW: Dp = LocalConfiguration.current.screenWidthDp.dp
     val gridCols = fitRow(screenW - 88.dp, cardWidth, gap).first
-    val dockCols = fitRow(screenW - 116.dp, cardWidth, gap).first
+    val dockAvailable = screenW - 80.dp - (if (config.racingTheme) 28.dp else 36.dp)
+    val dockCols = fitRow(dockAvailable, cardWidth, gap).first.let {
+        if (config.racingTheme) it.coerceAtMost(6) else it
+    }
 
     var dockExpanded by remember { mutableStateOf(false) }
     LaunchedEffect(config.layout) { if (config.layout != LAYOUT_DOCK) dockExpanded = false }
@@ -687,7 +693,11 @@ fun LauncherApp(rescanTick: Int) {
                 // focusable: Up from the top row slides it back into view.
                 var statusBarFocused by remember { mutableStateOf(false) }
                 val statusBarHeight by animateDpAsState(
-                    targetValue = if (config.showStatusBar || statusBarFocused) 80.dp else 4.dp,
+                    targetValue = if (config.showStatusBar || statusBarFocused) {
+                        if (config.racingTheme) {
+                            if (date.isNotEmpty()) 112.dp else 98.dp
+                        } else 80.dp
+                    } else 4.dp,
                     label = "statusBarHeight",
                 )
                 Box(
@@ -709,6 +719,7 @@ fun LauncherApp(rescanTick: Int) {
                         date = date,
                         showVpn = config.showVpnButton,
                         glass = config.statusBarGlass,
+                        racing = config.racingTheme,
                         onVpnClick = {
                             if (config.vpnApp.isNotEmpty()) Actions.launchApp(context, config.vpnApp)
                             else Actions.openVpnSettings(context)
@@ -1089,9 +1100,10 @@ private fun DockArea(
     // becomes the grid's columns when unfolded, and both states are centered
     // with the same column math — so icons never shift horizontally.
     BoxWithConstraints(modifier) {
-        val panelInnerPadding = 18.dp
+        val panelInnerPadding = if (config.racingTheme) 14.dp else 18.dp
         val available = maxWidth - 80.dp - panelInnerPadding * 2
-        val (cols, gapUsed) = fitRow(available, cardWidth, gap)
+        val (fitCols, gapUsed) = fitRow(available, cardWidth, gap)
+        val cols = if (config.racingTheme) fitCols.coerceAtMost(6) else fitCols
         val cardHeight = cardWidth * 9f / 16f
         val rows = apps.chunked(cols)
         // The grid opens focused on row 0, same column as the dock icon we came
@@ -1253,8 +1265,13 @@ private fun DockGlassPanel(
                 Modifier
                     .fillMaxSize()
                     .clip(SmoothCornerShape(LocalCornerRadius.current + 14.dp))
-                    .background(Color(0xB3121418))
-                    .background(Color.White.copy(alpha = 0.06f))
+                    .background(if (config.racingTheme) RacingColors.glass else Color(0xB3121418))
+                    .background(Color.White.copy(alpha = if (config.racingTheme) 0.025f else 0.06f))
+                    .border(
+                        1.dp,
+                        if (config.racingTheme) RacingColors.outline else Color.Transparent,
+                        SmoothCornerShape(LocalCornerRadius.current + 14.dp),
+                    )
             )
         }
         // Icons — on OPEN they vanish almost instantly (the rising grid takes

@@ -56,6 +56,8 @@ data class LauncherConfig(
     val showVpnButton: Boolean = true,
     /** wrap the status-bar icons in the same glass panel as dock mode */
     val statusBarGlass: Boolean = true,
+    /** Personal racing appearance; can be disabled in Display settings. */
+    val racingTheme: Boolean = true,
     /** index into DATE_FORMATS; 0 = no date shown */
     val dateFormat: Int = 0,
     // ----- display options -----

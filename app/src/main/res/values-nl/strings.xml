@@ -183,4 +183,7 @@
     <string name="home_redirect_label">Couchy-startknop</string>
     <string name="home_redirect_description">Open Couchy wanneer het Google TV-startscherm verschijnt. De oorspronkelijke launcher blijft ingeschakeld. Deze service kan geen scherminhoud of toetsaanslagen lezen. Schakel de service uit om terug te keren naar Google TV.</string>
     <string name="home_redirect_settings">Toegankelijkheidsinstellingen openen</string>
+
+    <string name="racing_style">Racestijl</string>
+    <string name="racing_style_sub">F1-klok, compact dock en Red Bull-kleuren</string>
 </resources>

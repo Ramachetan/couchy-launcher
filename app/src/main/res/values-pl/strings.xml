@@ -183,4 +183,7 @@
     <string name="home_redirect_label">Przycisk ekranu głównego Couchy</string>
     <string name="home_redirect_description">Otwieraj Couchy po pojawieniu się ekranu głównego Google TV. Oryginalny launcher pozostaje włączony. Usługa nie odczytuje zawartości ekranu ani naciśnięć klawiszy. Wyłącz usługę, aby wrócić do Google TV.</string>
     <string name="home_redirect_settings">Otwórz ustawienia ułatwień dostępu</string>
+
+    <string name="racing_style">Styl wyścigowy</string>
+    <string name="racing_style_sub">Zegar F1, kompaktowy dok i kolory Red Bull</string>
 </resources>

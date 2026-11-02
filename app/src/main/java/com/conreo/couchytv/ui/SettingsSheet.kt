@@ -513,6 +513,13 @@ private fun DisplayScreen(
             current = config.layout.coerceIn(0, 2),
             onSelect = { v -> update { it.copy(layout = v) } },
         )
+        SettingsItem(
+            selected = false,
+            onClick = { update { it.copy(racingTheme = !it.racingTheme) } },
+            headlineContent = { Text(stringResource(R.string.racing_style)) },
+            supportingContent = { Text(stringResource(R.string.racing_style_sub)) },
+            trailingContent = { CheckMark(checked = config.racingTheme) },
+        )
         // Section names are only drawn in carousel/grid — hide the toggle in dock.
         if (config.layout != LAYOUT_DOCK) {
             SectionLabel(stringResource(R.string.section_elements))

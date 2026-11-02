@@ -183,4 +183,7 @@
     <string name="home_redirect_label">Couchy 홈 버튼</string>
     <string name="home_redirect_description">Google TV 홈 화면이 나타나면 Couchy를 엽니다. 기존 런처는 활성 상태로 유지됩니다. 화면 내용이나 키 입력은 읽을 수 없습니다. Google TV로 돌아가려면 이 서비스를 끄세요.</string>
     <string name="home_redirect_settings">접근성 설정 열기</string>
+
+    <string name="racing_style">레이싱 스타일</string>
+    <string name="racing_style_sub">F1 시계, 작은 독 및 레드불 색상</string>
 </resources>

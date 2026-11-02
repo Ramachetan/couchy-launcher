@@ -183,4 +183,7 @@
     <string name="home_redirect_label">Couchy ホームボタン</string>
     <string name="home_redirect_description">Google TV のホーム画面が表示されたら Couchy を開きます。元のランチャーは有効のままです。画面の内容やキー入力は読み取れません。Google TV に戻すには、このサービスをオフにしてください。</string>
     <string name="home_redirect_settings">ユーザー補助設定を開く</string>
+
+    <string name="racing_style">レーシングスタイル</string>
+    <string name="racing_style_sub">F1風時計、コンパクトなドック、レッドブルカラー</string>
 </resources>

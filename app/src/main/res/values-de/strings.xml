@@ -183,4 +183,7 @@
     <string name="home_redirect_label">Couchy-Home-Taste</string>
     <string name="home_redirect_description">Couchy beim Öffnen des Google-TV-Startbildschirms anzeigen. Der ursprüngliche Launcher bleibt aktiviert. Der Dienst kann weder Bildschirminhalte noch Tastendrücke lesen. Zum Zurückkehren zu Google TV diesen Dienst deaktivieren.</string>
     <string name="home_redirect_settings">Bedienungshilfen öffnen</string>
+
+    <string name="racing_style">Rennsport-Stil</string>
+    <string name="racing_style_sub">F1-Uhr, kompaktes Dock und Red-Bull-Farben</string>
 </resources>

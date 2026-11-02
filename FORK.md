@@ -27,3 +27,5 @@ adb shell am start -n com.conreo.couchytv/.MainActivity -a com.conreo.couchytv.A
 ```
 
 Only that fixed local file is accepted. Playback uses the existing muted, looping video wallpaper, which releases its decoder when another app opens. No media is bundled with this fork. To switch it off, choose a gradient or photo in Couchy's wallpaper settings.
+
+Build `1.0.6-ramachetan.4` adds a personal racing appearance: a navy timing panel with a bold italic clock, red/yellow accents, and a narrower glass dock. Dock cards are 14% smaller in this mode, with at most six columns so the preferred app row stays intact. All apps remain available in the expanded grid. The appearance can be switched off in Settings → Display → Racing style, restoring the previous clock, accent, and dock sizing. Wallpaper and app-order preferences are not changed by this toggle.

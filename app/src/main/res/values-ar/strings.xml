@@ -183,4 +183,7 @@
     <string name="home_redirect_label">زر الصفحة الرئيسية في Couchy</string>
     <string name="home_redirect_description">افتح Couchy عند ظهور الشاشة الرئيسية في Google TV. يبقى المشغّل الأصلي مفعّلاً. لا تستطيع هذه الخدمة قراءة محتوى الشاشة أو ضغطات المفاتيح. أوقف الخدمة للعودة إلى Google TV.</string>
     <string name="home_redirect_settings">فتح إعدادات تسهيل الاستخدام</string>
+
+    <string name="racing_style">نمط السباق</string>
+    <string name="racing_style_sub">ساعة F1 وشريط تطبيقات مدمج وألوان Red Bull</string>
 </resources>

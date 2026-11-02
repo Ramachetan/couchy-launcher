@@ -183,4 +183,7 @@
     <string name="home_redirect_label">Couchy होम बटन</string>
     <string name="home_redirect_description">Google TV की होम स्क्रीन दिखने पर Couchy खोलें। मूल लॉन्चर चालू रहता है। यह सेवा स्क्रीन की सामग्री या कुंजी दबाने की जानकारी नहीं पढ़ सकती। Google TV पर लौटने के लिए इस सेवा को बंद करें।</string>
     <string name="home_redirect_settings">सुलभता सेटिंग खोलें</string>
+
+    <string name="racing_style">रेसिंग शैली</string>
+    <string name="racing_style_sub">F1 घड़ी, छोटा डॉक और Red Bull रंग</string>
 </resources>

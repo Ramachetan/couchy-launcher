@@ -183,4 +183,7 @@
     <string name="home_redirect_label">Tasto Home Couchy</string>
     <string name="home_redirect_description">Apri Couchy quando appare la schermata Home di Google TV. Il launcher originale resta attivo. Il servizio non può leggere il contenuto dello schermo o i tasti premuti. Disattiva il servizio per tornare a Google TV.</string>
     <string name="home_redirect_settings">Apri impostazioni di accessibilità</string>
+
+    <string name="racing_style">Stile da corsa</string>
+    <string name="racing_style_sub">Orologio F1, dock compatto e colori Red Bull</string>
 </resources>
