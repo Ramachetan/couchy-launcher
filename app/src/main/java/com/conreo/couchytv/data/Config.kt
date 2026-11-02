@@ -94,9 +94,41 @@ val LANGUAGES = listOf(
 
 private val Context.dataStore by preferencesDataStore(name = "launcher")
 private val KEY_CONFIG = stringPreferencesKey("config")
+private val KEY_PREFERRED_ROW = stringPreferencesKey("preferred_row_20261102")
 private val json = Json { ignoreUnknownKeys = true }
 
 class ConfigStore(private val context: Context) {
+
+    /** Restore the owner's previous six-app row once, preserving other preferences.
+     * Kept in the same DataStore transaction so an interrupted upgrade can retry safely.
+     * Later manual reordering is respected because this migration never runs twice.
+     */
+    suspend fun restorePreferredRowOnce() {
+        context.dataStore.edit { prefs ->
+            if (prefs[KEY_PREFERRED_ROW] == "done") return@edit
+            val current = prefs[KEY_CONFIG]?.let {
+                runCatching { json.decodeFromString<LauncherConfig>(it) }.getOrNull()
+            } ?: LauncherConfig()
+            val first = current.categories.firstOrNull { it.id != AppRepository.ALL_APPS_ID }?.id
+                ?: return@edit
+            val preferred = listOf(
+                "org.smarttube.stable",
+                "com.google.android.youtube.tvmusic",
+                "com.google.android.youtube.tv",
+                "com.tcl.browser",
+                "com.esaba.downloader",
+                "com.android.vending",
+            )
+            val updated = current.copy(
+                sections = current.sections + preferred.associateWith { setOf(first) },
+                order = current.order + (first to (
+                    preferred + current.order[first].orEmpty().filter { it !in preferred }
+                )),
+            )
+            prefs[KEY_CONFIG] = json.encodeToString(updated)
+            prefs[KEY_PREFERRED_ROW] = "done"
+        }
+    }
 
     val flow: Flow<LauncherConfig> = context.dataStore.data.map { prefs ->
         prefs[KEY_CONFIG]?.let {

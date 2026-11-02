@@ -9,10 +9,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
+import androidx.lifecycle.lifecycleScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import com.conreo.couchytv.ui.LauncherApp
+import com.conreo.couchytv.data.ConfigStore
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
@@ -24,13 +27,15 @@ class MainActivity : ComponentActivity() {
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val pkg = intent.data?.schemeSpecificPart
-            // Removals always rescan (the app may be on the grid). For installs and
-            // changes, skip the full scan unless the package is actually launchable.
+            // Disabled apps no longer resolve a launch intent, but their existing
+            // tiles must still disappear after PACKAGE_CHANGED.
             val launchable = pkg != null && (
                 packageManager.getLeanbackLaunchIntentForPackage(pkg) != null ||
                     packageManager.getLaunchIntentForPackage(pkg) != null
                 )
-            if (intent.action == Intent.ACTION_PACKAGE_REMOVED || launchable) {
+            if (intent.action == Intent.ACTION_PACKAGE_REMOVED ||
+                intent.action == Intent.ACTION_PACKAGE_CHANGED || launchable
+            ) {
                 rescanTick++
             }
         }
@@ -48,6 +53,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        lifecycleScope.launch { ConfigStore(applicationContext).restorePreferredRowOnce() }
 
         // A home screen never exits on Back
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {

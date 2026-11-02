@@ -15,3 +15,5 @@ adb shell cmd package set-home-activity com.google.android.apps.tv.launcherx/.ho
 Do not follow the upstream README's package-disabling fallback on the Google TV Streamer. No package needs to be disabled for this fork's redirect.
 
 Build instructions are in CONTRIBUTING.md. Preserve the signing key used for your installed build so later builds can update it without clearing settings.
+
+Build `1.0.6-ramachetan.2` restores the previous app row once: SmartTube, YouTube Music, YouTube, BrowseHere, Downloader, Google Play Store. It retains wallpaper and other preferences, and respects subsequent manual reordering. Package-change handling also refreshes tiles when an app is disabled.
