@@ -59,7 +59,7 @@ fun AppCard(
     // it, using a short time window that expires on its own (a sticky flag
     // would eat the next legitimate press, since the release is delivered to
     // the menu's window and never comes back to this card).
-    val cardShape = SmoothCornerShape(if (compactIcon) 12.dp else LocalCornerRadius.current)
+    val cardShape = SmoothCornerShape(LocalCornerRadius.current)
     var downAt by remember { mutableLongStateOf(0L) }
     var lastKeyDown by remember { mutableLongStateOf(0L) }
     var longPressAt by remember { mutableLongStateOf(0L) }
@@ -103,7 +103,7 @@ fun AppCard(
             contentColor = Color.White,
             focusedContentColor = Color.White,
         ),
-        scale = ClickableSurfaceDefaults.scale(focusedScale = if (compactIcon) 1.12f else 1.10f),
+        scale = ClickableSurfaceDefaults.scale(focusedScale = if (compactIcon) 1.18f else 1.10f),
         glow = ClickableSurfaceDefaults.glow(
             // Softer + tighter than before: reads at 3m, cheap to render on weak
             // TV GPUs, and no longer competes with the accent ring.
@@ -112,7 +112,7 @@ fun AppCard(
         border = ClickableSurfaceDefaults.border(
             // Thin accent ring on focus (thicker while dragging in move mode).
             focusedBorder = Border(
-                BorderStroke(when { isMoving -> 3.dp; compactIcon -> 1.25.dp; else -> 2.dp }, accent),
+                BorderStroke(if (isMoving) 3.dp else 2.dp, accent),
                 shape = cardShape,
             )
         ),
