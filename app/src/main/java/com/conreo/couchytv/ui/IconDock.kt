@@ -49,7 +49,7 @@ fun IconDockArea(
 ) {
     BoxWithConstraints(modifier) {
         // Reserve space for the drawer button even with large UI scaling.
-        val iconSize = (cardWidth * 0.58f).coerceIn(52.dp, 80.dp)
+        val iconSize = (cardWidth * 0.44f).coerceIn(48.dp, 64.dp)
         val iconGap = 14.dp
         val favoriteCount = (((maxWidth - 120.dp) / (iconSize + iconGap)).toInt() - 1)
             .coerceIn(0, 6)
@@ -92,9 +92,9 @@ fun IconDockArea(
         ) {
             Row(
                 modifier = Modifier
-                    .background(RacingColors.surface.copy(alpha = 0.72f), RoundedCornerShape(24.dp))
-                    .border(1.dp, Color.White.copy(alpha = 0.14f), RoundedCornerShape(24.dp))
-                    .padding(horizontal = 18.dp, vertical = 14.dp),
+                    .background(RacingColors.surface.copy(alpha = 0.72f), RoundedCornerShape(20.dp))
+                    .border(1.dp, Color.White.copy(alpha = 0.14f), RoundedCornerShape(20.dp))
+                    .padding(horizontal = 16.dp, vertical = 10.dp),
                 horizontalArrangement = Arrangement.spacedBy(iconGap),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -135,16 +135,16 @@ fun IconDockArea(
                                 if (it.isFocused) { focusedDock = favorites.size; returnIndex = favorites.size }
                                 else if (focusedDock == favorites.size) focusedDock = -1
                             },
-                        shape = ClickableSurfaceDefaults.shape(RoundedCornerShape(16.dp)),
+                        shape = ClickableSurfaceDefaults.shape(RoundedCornerShape(12.dp)),
                         colors = ClickableSurfaceDefaults.colors(
                             containerColor = Color.White.copy(alpha = 0.12f),
                             focusedContainerColor = Color.White.copy(alpha = 0.2f),
                             contentColor = RacingColors.onSurface,
                             focusedContentColor = RacingColors.onSurface,
                         ),
-                        scale = ClickableSurfaceDefaults.scale(focusedScale = 1.18f),
+                        scale = ClickableSurfaceDefaults.scale(focusedScale = 1.12f),
                         border = ClickableSurfaceDefaults.border(
-                            focusedBorder = Border(BorderStroke(2.dp, accent), shape = RoundedCornerShape(16.dp)),
+                            focusedBorder = Border(BorderStroke(1.25.dp, accent), shape = RoundedCornerShape(12.dp)),
                         ),
                     ) {
                         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
